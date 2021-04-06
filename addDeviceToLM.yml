@@ -1,0 +1,6 @@
+---
+- name: AddDeviceLogicMonitor
+  hosts: localhost
+  tasks:
+  - name: addDeviceDevices
+    command: /usr/bin/python /home/kfelix/AddDevicesLM.py

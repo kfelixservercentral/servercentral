@@ -1,0 +1,30 @@
+---
+   - name: AddHostObservium
+     hosts: localhost
+     vars:
+        user_pass: "{{ password }}"
+     tasks:
+       - name: addHostObservium
+         uri:
+           url: https://observium.ord6/api/v0/devices/
+           user: 'kfelix'
+           password: "{{user_pass}}"
+           method: POST
+           HEADER_Content-Type: "application/json"
+           body: {"hostname":"aggrEK111-1.ord6", "snmp_community": "sw1"}
+           force_basic_auth: yes
+           validate_certs: false 
+           timeout: 180
+           status_code: 200
+           body_format: json
+           delegate_to: localhost
+           register: result
+           fail_when: result.status not in [ 200,302 ]
+
+# curl -v -k -X POST -d '{"hostname":"aggrEK111-1.ord6", "snmp_community": "sw1"}'  -u kfelix 'https://observium.ord6/api/v0/devices/' -H "Content-Type: application/json"
+#
+# take 2 is to clean up the playbook and set variable that are read in for user,password,and JSON vallue hostname 
+#
+# need to write status capture for "content: Not Created"
+#
+#
